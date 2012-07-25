@@ -174,16 +174,13 @@ __extend__(HTMLDocument.prototype, {
     },
     createElementNS : function (uri, local) {
         //print('createElementNS :'+uri+" "+local);
-        if(!uri){
-            return this.createElement(local);
-        }else if ("http://www.w3.org/1999/xhtml" == uri) {
-            return this.createElement(local);
-        } else if ("http://www.w3.org/1998/Math/MathML" == uri) {
-            return this.createElement(local);
-        } else if ("http://www.w3.org/2000/svg" == uri) {
-            return this.createElement(local);
+        if(!uri || 
+            uri == "http://www.w3.org/1999/xhtml" || 
+            uri == "http://www.w3.org/1998/Math/MathML" ||
+            uri == "http://www.w3.org/2000/svg") {
+             return this.createElement(local);
         } else {
-            return Document.prototype.createElementNS.apply(this,[uri, local]);
+             return Document.prototype.createElementNS.apply(this,[uri, local]);
         }
     },
     get anchors(){
